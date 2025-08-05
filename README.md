@@ -36,7 +36,7 @@ This script fetches `.js` files from a target domain, analyzes them for secrets,
 
 ### Python Libraries
 
-Install required libraries using :
+Install required libraries using
 ```
 pip install requests jsbeautifier halo tqdm torch transformers playwright
 playwright install
