@@ -49,7 +49,7 @@ export HUGGINGFACE_API_KEY=hf_your_api_key_here
 
 Note : This script uses model `Qwen/Qwen2.5-1.5B-Instruct` and runs it locally via CUDA
 
-### Usage : 
+### Usage 
 ```
 python3 js4gpudelay.py --domain example.com
 ```
