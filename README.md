@@ -31,8 +31,6 @@ This script fetches `.js` files from a target domain, analyzes them for secrets,
 -   [waybackurls](https://github.com/tomnomnom/waybackurls)
     
 -   [LinkFinder](https://github.com/GerbenJavado/LinkFinder)
-    
--   Playwright
 
 ### Python Libraries
 
