@@ -22,7 +22,7 @@ This script fetches `.js` files from a target domain, analyzes them for secrets,
     
 -   CSP header check
     
--   Burp/ZAP integration placeholder
+-   Burp / ZAP integration placeholder
 
 ### Prerequisites
 
