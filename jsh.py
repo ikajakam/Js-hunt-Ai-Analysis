@@ -440,7 +440,7 @@ def main():
         print("☢  Downloading JS files :")
         downloaded = download_js_files(js_urls, output_dir, args.proxy)
 
-        print("\n📩 Do you want to continue to AI Analysis? [y/N]: ", end="")
+        print("\n📩 Do youstill have hardon for AI Analysis? or wanna jizz later [y/N]: ", end="")
         choice = input().strip().lower()
         if choice != 'y':
             print("\n⏹️ Halting after JS file download. You can continue later using:")
