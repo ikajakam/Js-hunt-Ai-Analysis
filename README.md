@@ -67,7 +67,7 @@ export HUGGINGFACE_API_KEY=hf_your_api_key_here
 ```
 
 - reload your `.bashrc` or `.zshrc`
-
+- models are cached in ~/.cache/huggingface
   
 
 Note : This script uses model `Qwen/Qwen2.5-1.5B-Instruct` and runs it locally via CUDA
@@ -77,11 +77,11 @@ Note : This script uses model `Qwen/Qwen2.5-1.5B-Instruct` and runs it locally v
 ### Usage
 
 ```
-python3 js4gpudelay.py --domain example.com
+python3 js4h.py --domain example.com
 ```
 
 ```
-python3 js4gpudelay.py --domain example.com --proxy http://127.0.0.1:8080
+python3 js4h.py --domain example.com --proxy http://127.0.0.1:8080
 ```
 - Results are saved in `jshunt_output/{domain}/`
 
