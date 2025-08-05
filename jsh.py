@@ -407,31 +407,48 @@ from datetime import datetime
 def progress_log(message):
     print(message)
 
+
 def main():
     global output_dir
     parser = argparse.ArgumentParser(description="🧠 JS Recon Tool + AI + DOM Trace + Playwright")
     parser.add_argument("--domain", required=True, help="Target domain (e.g. example.com)")
     parser.add_argument("--proxy", help="Proxy (http://127.0.0.1:8080)")
+    parser.add_argument("--analysis", nargs="?", const=True, help="Resume analysis from existing path")
     args = parser.parse_args()
 
-    start_time = datetime.now()
-    progress_log(f"\n☢  Scan started at: {start_time.strftime('%Y-%m-%d %H:%M:%S')}")
+    if args.analysis is True:
+        print("❌ Please provide path to existing scan directory.")
+        return
+    elif args.analysis:
+        output_dir = args.analysis
+        js_dir = os.path.join(output_dir, "js_files")
+        if not os.path.exists(js_dir):
+            print(f"❌ JS directory not found in: {js_dir}")
+            return
+        downloaded = [os.path.join(js_dir, f) for f in os.listdir(js_dir) if f.endswith(".js")]
+        start_time = datetime.now()
+        print(f"\n☢  Resuming analysis at: {start_time.strftime('%Y-%m-%d %H:%M:%S')}")
+        print(f"☢  Using directory: {output_dir}")
+        print(f"☢  Found {len(downloaded)} JS files to analyze...")
+    else:
+        output_dir = prepare_output_dir(args.domain)
+        start_time = datetime.now()
+        print(f"\n☢  Scan started at: {start_time.strftime('%Y-%m-%d %H:%M:%S')}")
+        print(f"\n   ⛩  Omae Wa Mou Shindeiru お前はもう死んでいる\n")
+        print("☢  Gathering JS URLs...")
+        js_urls = get_domains_from_target(args.domain)
+        print("☢  Downloading JS files :")
+        downloaded = download_js_files(js_urls, output_dir, args.proxy)
 
-    progress_log("☢  Gathering JS URLs...")
-    print(f"\n   ⛩  Omae Wa Mou Shindeiru お前はもう死んでいる")
-    output_dir = prepare_output_dir(args.domain)
-    js_urls = get_domains_from_target(args.domain)
-    #progress_log(f"[+] Found {len(js_urls)} JS files")
+        print("\n📩 Do you want to continue to AI Analysis? [y/N]: ", end="")
+        choice = input().strip().lower()
+        if choice != 'y':
+            print("\n⏹️ Halting after JS file download. You can continue later using:")
+            print(f"   python3 jsh_updated.py --domain {args.domain} --analysis {output_dir}\n")
+            return
 
-    progress_log("☢  Downloading JS files :")
-    downloaded = download_js_files(js_urls, output_dir, args.proxy)
-
-    lazy_init_model()  
-
-    progress_log("\n☢  Analyzing JS files...")
-
-    #lazy_init_model()  
-
+    lazy_init_model()
+    print("\n☢  Analyzing JS files...")
     for idx, js_file in enumerate(downloaded, 1):
         print(f"  ├─ [{idx}/{len(downloaded)}] Processing: {os.path.basename(js_file)}")
         extract_endpoints(js_file)
@@ -441,21 +458,19 @@ def main():
         analyze_with_ai(js_file)
         integrate_burp_zap(js_file)
 
-
-    progress_log("\n☢  Checking CSP headers...")
+    print("\n☢  Checking CSP headers...")
     check_csp(args.domain, args.proxy)
 
-    progress_log("☢  Generating GitHub dorks...")
+    print("☢  Generating GitHub dorks...")
     github_dork(args.domain)
 
-    progress_log("☢  Running DOM tracer with Playwright...")
+    print("☢  Running DOM tracer with Playwright...")
     dom_tracer(args.domain)
 
     end_time = datetime.now()
-    progress_log(f"☢  Scan ended at: {end_time.strftime('%Y-%m-%d %H:%M:%S')}")
-    progress_log(f"☢  Total Duration: {end_time - start_time}")
-    progress_log(f"\n🫦 jizzed everything in {output_dir}\n")
+    print(f"\n☢  Scan ended at: {end_time.strftime('%Y-%m-%d %H:%M:%S')}")
+    print(f"☢  Total Duration: {end_time - start_time}")
+    print(f"\n🫦 jizzed everything in {output_dir}")
     print("🕷️ Happy hunting and keep jizzing your recon\n")
-
 if __name__ == "__main__":
     main()
