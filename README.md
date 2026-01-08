@@ -17,7 +17,7 @@ This script fetches `.js` files from a target domain, analyse them for secrets, 
 
 - Extracts endpoints using **LinkFinder**
 
-- Identifies secrets, tokens, and dangerous JS patterns
+- Identifies secrets, tokens and dangerous JS patterns
 
 - Beautifies and verifies DOM sinks
 
