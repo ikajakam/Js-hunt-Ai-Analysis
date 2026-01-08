@@ -3,7 +3,7 @@
 
   
 
-This script fetches `.js` files from a target domain, analyzes them for secrets, vulnerable code patterns, and performs AI-based auditing using a local LLM model.
+This script fetches `.js` files from a target domain, analyse them for secrets, vulnerable code patterns, and performs AI-based auditing using a local LLM model.
 
   
 
